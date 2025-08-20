@@ -1,0 +1,63 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{setspace}
+\setstretch{1.15}
+\usepackage{hyperref}
+
+\title{pdfa-converter}
+\author{Oliver Fong}
+\date{August 20, 2025}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction}
+This simple project is meant to provide a library and executable which converts PDFs
+into PDF/A-compliant files for the University of Chicago's DLDC attachment converter project.
+This project is essentially an extension of John Whitington's Camlpdf library, while also
+meshing it with Ezxmlm, a version of Xmlm supposedly easier to understand and work with.
+The program runs as follows: 1) Look for non-compliancy - which parts of the PDF are non-compliant
+with the PDFA standards? 2) For whichever aspects of the file are non-compliant, then are they
+either implemented in the PDF but wrong, or are they simply absent from the file altogether? In 
+the latter case, create the missing piece, insert the relevant objects, and insert/modify references to them from
+depending objects. In the former case, then parse the existing object, look for what the error is, modify it, and
+reinsert the modified object altogether. Do this for all pertinent problems, and return the edited file.")
+ (synopsis "Simple API and executable for converting pdf files into pdfa-compliant files.
+
+\section*{Architecture}
+The project is organized using several modules:
+\begin{itemize}
+  \item \textbf{fonts.ml}: Logic and definitions for representing and handling fonts in digital documents.
+  \item \textbf{lib.ml}: Provides the core library interface, connecting different parts of the system.
+  \item \textbf{outintent.ml}: Manages output intent metadata, something that is often necessary to add to a non-compliant PDF.
+  \item \textbf{packet.ml}: Encapsulates XMP packet structures for working with XML and RDF tags. Uses Ezxmlm to interface with existing XML, or to create and insert whatever tags or metadata necessary.
+  \item \textbf{utility.ml}: Contains helper functions and reusable routines that support the main modules.
+\end{itemize}
+
+\section*{Implementation Approach}
+The design follows separation of concerns, with each module serving a clear role. 
+I think the best way to go about organizing this project further is by keeping each specification of PDF/A separate,
+such that excryption and decryption is its own module and so on and so forth. 
+
+\section*{Build and Usage}
+The project uses Dune for compilation:
+\begin{verbatim}
+dune build
+\end{verbatim}
+\begin{verbatim}
+opam exec -- dune ocaml top-module lib/example_module.ml > ./.ocamlinit && utop
+\end{verbatim}
+There are some problems using camlpdf with dune, so this latter command is
+useful for using utop with dune.
+
+\section*{Discussion}
+\textbf{Strengths:} clean modular structure, type safety, reproducible builds.  
+\textbf{Limitations:} domain-specific scope, limited user-facing documentation.  
+\textbf{Future Work:} extend font coverage, improve packet handling, and add a CLI for testing.
+
+\section*{Conclusion}
+This project highlights how OCaml and Dune can be combined to create a modular, type-safe system for managing fonts, packets, and output intent metadata. It provides a foundation for further development into a more general-purpose document and data toolkit.
+
+\end{document}
+

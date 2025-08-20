@@ -1,0 +1,16 @@
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Background}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}OCaml}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Dune Build System}{3}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Project Domain}{3}{section.2.3}%
+\contentsline {chapter}{\numberline {3}System Design and Architecture}{4}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Implementation Approach}{5}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Separation of Concerns}{5}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Data Abstraction}{5}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Inter-module Collaboration}{5}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Build and Usage}{6}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Evaluation and Discussion}{7}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Strengths}{7}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Limitations}{7}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Future Work}{7}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Conclusion}{8}{chapter.7}%

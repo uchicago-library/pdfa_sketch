@@ -1,0 +1,24 @@
+# dune ocaml top-module lib/lib.ml
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /Users/oliverfong/.cache/dune/db
+# Workspace root: "/Users/oliverfong/Documents/uchicago/reg
+# internship/final_sketch/pdfaer"
+# Auto-detected concurrency: 8
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /Users/oliverfong/.opam/4.14.1/bin/ocamlc.opt -config > /var/folders/6w/5pxr8tmd66372jcwfz26gzd00000gn/T/dune_f757a2_output
+$ (cd _build/default && /Users/oliverfong/.opam/4.14.1/bin/ocamldep.opt -modules -impl lib/packet.ml) > _build/default/lib/.lib.objs/lib__Packet.impl.d
+$ (cd _build/default && /Users/oliverfong/.opam/4.14.1/bin/ocamlc.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I lib/.lib.objs/byte -I /Users/oliverfong/.opam/4.14.1/lib/camlpdf -I /Users/oliverfong/.opam/4.14.1/lib/ezxmlm -I /Users/oliverfong/.opam/4.14.1/lib/xmlm -no-alias-deps -opaque -open Lib__ -o lib/.lib.objs/byte/lib__Packet.cmo -c -impl lib/packet.ml)
+> File "lib/packet.ml", line 110, characters 4-17:
+> 110 |   | Some (_, obj) ->
+>           ^^^^^^^^^^^^^
+> Warning 11 [redundant-case]: this match case is unused.
+$ (cd _build/default && /Users/oliverfong/.opam/4.14.1/bin/ocamlc.opt -w @1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I .topmod/lib/lib.ml -I /Users/oliverfong/.opam/4.14.1/lib/camlpdf -I /Users/oliverfong/.opam/4.14.1/lib/ezxmlm -I /Users/oliverfong/.opam/4.14.1/lib/xmlm -intf-suffix .dummy-ignore-mli -no-alias-deps -opaque -open Lib__ -o .topmod/lib/lib.ml/lib.cmo -c -impl lib/lib.ml)

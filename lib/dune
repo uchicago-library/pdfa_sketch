@@ -1,0 +1,11 @@
+(library
+ (name lib)
+ (libraries camlpdf ezxmlm xmlm))
+
+(env
+ (dev
+  (flags (:standard -warn-error -A))))
+
+; Local Variables:
+; mode: dune
+; End:
