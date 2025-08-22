@@ -3,3 +3,4 @@ _build
 **/*.exe
 **/__pycache__/**
 testing/outfiles/**
+.DS_Store
