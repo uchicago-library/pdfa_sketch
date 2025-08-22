@@ -1,0 +1,61 @@
+==== camlpdf_pdfa.pdf ====
+failedRules=2
+
+|  ISO 19005-1:2005
+|  The value of Creator entry from the document information dictionary, if present, and its analogous XMP property "xmp:CreatorTool" shall be equivalent
+|  The value of Creator entry from the document Info dictionary and its matching XMP property "xmp:CreatorTool" are not equivalent (Info /Creator = TeX, XMP xmp:CreatorTool = null)
+|  ctx=root/trailer[0]/Info[0]
+
+|  ISO 19005-1:2005
+|  The value of Producer entry from the document information dictionary, if present, and its analogous XMP property "pdf:Producer" shall be equivalent
+|  The value of Producer entry from the document Info dictionary and its matching XMP property "pdf:Producer" are not equivalent (Info /Producer = pdfTeX-1.40.3, XMP pdf:Producer = null)
+|  ctx=root/trailer[0]/Info[0]
+
+==== example_roelofsen_pdfa.pdf ====
+failedRules=5
+
+|  ISO 19005-1:2005
+|  An XObject dictionary shall not contain the SMask key
+|  An XObject contains an SMask key
+|  ctx=root/document[0]/pages[0](108 0 obj PDPage)/contentStream[0](73 0 obj PDContentStream)/operators[165]/xObject[0](71 0 obj PDXImage)
+
+|  ISO 19005-1:2005
+|  The value of Creator entry from the document information dictionary, if present, and its analogous XMP property "xmp:CreatorTool" shall be equivalent
+|  An XObject contains an SMask key
+|  ctx=root/document[0]/pages[3](119 0 obj PDPage)/contentStream[0](87 0 obj PDContentStream)/operators[11]/xObject[0](104 0 obj PDXImage)
+
+|  ISO 19005-1:2005
+|  The value of Producer entry from the document information dictionary, if present, and its analogous XMP property "pdf:Producer" shall be equivalent
+|  An XObject contains an SMask key
+|  ctx=root/document[0]/pages[5](76 0 obj PDPage)/contentStream[0](128 0 obj PDContentStream)/operators[11]/xObject[0](113 0 obj PDXImage)
+
+|  ISO 19005-1:2005
+|  A Group object with an S key with a value of Transparency shall not be included in a form XObject. A Group object with an S key with a value of Transparency shall not be included in a page dictionary
+|  An XObject contains an SMask key
+|  ctx=root/document[0]/pages[7](83 0 obj PDPage)/contentStream[0](64 0 obj PDContentStream)/operators[11]/xObject[0](93 0 obj PDXImage)
+
+|  ISO 19005-1:2005
+|  Xref streams shall not be used
+|  The value of Creator entry from the document Info dictionary and its matching XMP property "xmp:CreatorTool" are not equivalent (Info /Creator = TeX, XMP xmp:CreatorTool = null)
+|  ctx=root/trailer[0]/Info[0]
+
+==== out_pdfa.pdf ====
+failedRules=2
+
+|  ISO 19005-1:2005
+|  Xref streams shall not be used
+|  The document uses xref streams
+|  ctx=root/document[0]
+
+|  ISO 19005-1:2005
+|  The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, except when the fonts are used exclusively with text rendering mode 3
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[0](8 0 obj PDPage)/contentStream[0](12 0 obj PDContentStream)/operators[8]/font[0](Helvetica)
+
+==== text_pdfa.pdf ====
+failedRules=1
+
+|  ISO 19005-1:2005
+|  The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, except when the fonts are used exclusively with text rendering mode 3
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[0](8 0 obj PDPage)/contentStream[0]/operators[5]/font[0](Helvetica)

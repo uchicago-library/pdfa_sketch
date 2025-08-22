@@ -1,0 +1,104 @@
+==== camlpdf_pdfa.pdf ====
+failedRules=0
+
+==== cpdfmanual281_pdfa.pdf ====
+failedRules=9
+
+|  ISO 19005-1:2005
+|  The value of Title entry from the document information dictionary, if present, and its analogous XMP property "dc:title['x-default']" shall be equivalent
+|  The value of Title entry from the document Info dictionary and its matching XMP property "dc:title['x-default']" are not equivalent (Info /Title = "", XMP dc:title['x-default'] = null)
+|  ctx=root/trailer[0]/Info[0]
+
+|  ISO 19005-1:2005
+|  The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, except when the fonts are used exclusively with text rendering mode 3
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[119](23 0 obj PDPage)/contentStream[0](1687 0 obj PDContentStream)/operators[30]/xObject[0]/contentStream[0](1652 0 obj PDContentStream)/operators[3]/font[0](Helvetica)
+
+|  ISO 19005-1:2005
+|  An annotation dictionary shall contain the F key. The F key’s Print flag bit shall be set to 1 and its Hidden, Invisible and NoView flag bits shall be set to 0
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[119](23 0 obj PDPage)/contentStream[0](1687 0 obj PDContentStream)/operators[142]/xObject[0]/contentStream[0](1555 0 obj PDContentStream)/operators[3]/font[0](Times-Roman)
+
+|  ISO 19005-1:2005
+|  Xref streams shall not be used
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[120](110 0 obj PDPage)/contentStream[0](1662 0 obj PDContentStream)/operators[31]/xObject[0]/contentStream[0](1535 0 obj PDContentStream)/operators[3]/font[0](Times-Roman)
+
+|  ISO 19005-1:2005
+|  The value of Author entry from the document information dictionary, if present, and its analogous XMP property "dc:creator" shall be equivalent. dc:creator shall contain exactly one entry
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[120](110 0 obj PDPage)/contentStream[0](1662 0 obj PDContentStream)/operators[31]/xObject[0]/contentStream[0](1535 0 obj PDContentStream)/operators[5]/font[0](Times-BoldItalic)
+
+|  ISO 19005-1:2005
+|  If a ca key is present in an ExtGState object, its value shall be 1.0
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[120](110 0 obj PDPage)/contentStream[0](1662 0 obj PDContentStream)/operators[135]/xObject[0]/contentStream[0](1554 0 obj PDContentStream)/operators[6]/font[0](Times-Roman)
+
+|  ISO 19005-1:2005
+|  The value of Subject entry from the document information dictionary, if present, and its analogous XMP property "dc:description['x-default']" shall be equivalent
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[120](110 0 obj PDPage)/contentStream[0](1662 0 obj PDContentStream)/operators[135]/xObject[0]/contentStream[0](1554 0 obj PDContentStream)/operators[8]/font[0](Times-BoldItalic)
+
+|  ISO 19005-1:2005
+|  The value of Keywords entry from the document information dictionary, if present, and its analogous XMP property "pdf:Keywords" shall be equivalent
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[121](43 0 obj PDPage)/contentStream[0](1605 0 obj PDContentStream)/operators[80]/xObject[0]/contentStream[0](1661 0 obj PDContentStream)/operators[4]/font[0](Times-Roman)
+
+|  ISO 19005-1:2005
+|  A Group object with an S key with a value of Transparency shall not be included in a form XObject. A Group object with an S key with a value of Transparency shall not be included in a page dictionary
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[122](35 0 obj PDPage)/contentStream[0](1678 0 obj PDContentStream)/operators[28]/xObject[0]/contentStream[0](1580 0 obj PDContentStream)/operators[5]/font[0](Times-Roman)
+
+==== example_roelofsen_pdfa.pdf ====
+failedRules=3
+
+|  ISO 19005-1:2005
+|  An XObject dictionary shall not contain the SMask key
+|  An XObject contains an SMask key
+|  ctx=root/document[0]/pages[0](108 0 obj PDPage)/contentStream[0](73 0 obj PDContentStream)/operators[165]/xObject[0](71 0 obj PDXImage)
+
+|  ISO 19005-1:2005
+|  A Group object with an S key with a value of Transparency shall not be included in a form XObject. A Group object with an S key with a value of Transparency shall not be included in a page dictionary
+|  An XObject contains an SMask key
+|  ctx=root/document[0]/pages[3](119 0 obj PDPage)/contentStream[0](87 0 obj PDContentStream)/operators[11]/xObject[0](104 0 obj PDXImage)
+
+|  ISO 19005-1:2005
+|  Xref streams shall not be used
+|  An XObject contains an SMask key
+|  ctx=root/document[0]/pages[5](76 0 obj PDPage)/contentStream[0](128 0 obj PDContentStream)/operators[11]/xObject[0](113 0 obj PDXImage)
+
+==== out_pdfa.pdf ====
+failedRules=5
+
+|  ISO 19005-1:2005
+|  The value of Producer entry from the document information dictionary, if present, and its analogous XMP property "pdf:Producer" shall be equivalent
+|  The value of Producer entry from the document Info dictionary and its matching XMP property "pdf:Producer" are not equivalent (Info /Producer = GPL Ghostscript 10.05.1, XMP pdf:Producer = null)
+|  ctx=root/trailer[0]/Info[0]
+
+|  ISO 19005-1:2005
+|  The metadata stream shall conform to XMP Specification and well formed PDFAExtension Schema for all extensions
+|  The serialization of the metadata stream does not conform to XMP Specification
+|  ctx=root/document[0]/metadata[0](9 0 obj PDMetadata)/XMPPackage[0]
+
+|  ISO 19005-1:2005
+|  Xref streams shall not be used
+|  The document uses xref streams
+|  ctx=root/document[0]
+
+|  ISO 19005-1:2005
+|  The PDF/A version and conformance level of a file shall be specified using the PDF/A Identification extension schema
+|  The document metadata stream doesn't contain PDF/A Identification Schema
+|  ctx=root/document[0]/metadata[0](9 0 obj PDMetadata)/XMPPackage[0]
+
+|  ISO 19005-1:2005
+|  The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, except when the fonts are used exclusively with text rendering mode 3
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[0](8 0 obj PDPage)/contentStream[0](12 0 obj PDContentStream)/operators[8]/font[0](Helvetica)
+
+==== text_pdfa.pdf ====
+failedRules=1
+
+|  ISO 19005-1:2005
+|  The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, except when the fonts are used exclusively with text rendering mode 3
+|  The font program is not embedded
+|  ctx=root/document[0]/pages[0](8 0 obj PDPage)/contentStream[0]/operators[5]/font[0](Helvetica)

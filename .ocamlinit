@@ -1,0 +1,21 @@
+#directory "/Users/oliverfong/.opam/4.14.1/lib/camlp-streams";;
+#directory "/Users/oliverfong/.opam/4.14.1/lib/camlpdf";;
+#directory "/Users/oliverfong/.opam/4.14.1/lib/ezxmlm";;
+#directory "/Users/oliverfong/.opam/4.14.1/lib/prelude";;
+#directory "/Users/oliverfong/.opam/4.14.1/lib/xmlm";;
+#directory "/Users/oliverfong/Documents/uchicago/reg/final_sketch/real_pdfaer/_build/default/.topmod/lib/lib.ml";;
+#load "/Users/oliverfong/.opam/4.14.1/lib/camlpdf/camlpdf.cma";;
+#load "/Users/oliverfong/.opam/4.14.1/lib/xmlm/xmlm.cma";;
+#load "/Users/oliverfong/.opam/4.14.1/lib/ezxmlm/ezxmlm.cma";;
+#load "/Users/oliverfong/.opam/4.14.1/lib/camlp-streams/camlp_streams.cma";;
+#load "/Users/oliverfong/.opam/4.14.1/lib/ocaml/str.cma";;
+#load "/Users/oliverfong/.opam/4.14.1/lib/ocaml/unix.cma";;
+#load "/Users/oliverfong/.opam/4.14.1/lib/prelude/prelude.cma";;
+#load "/Users/oliverfong/Documents/uchicago/reg/final_sketch/real_pdfaer/_build/default/lib/.lib.objs/byte/lib__.cmo";;
+#load "/Users/oliverfong/Documents/uchicago/reg/final_sketch/real_pdfaer/_build/default/lib/.lib.objs/byte/lib__Fonts.cmo";;
+#load "/Users/oliverfong/Documents/uchicago/reg/final_sketch/real_pdfaer/_build/default/lib/.lib.objs/byte/lib__Outintent.cmo";;
+#load "/Users/oliverfong/Documents/uchicago/reg/final_sketch/real_pdfaer/_build/default/lib/.lib.objs/byte/lib__Packet.cmo";;
+#load "/Users/oliverfong/Documents/uchicago/reg/final_sketch/real_pdfaer/_build/default/lib/.lib.objs/byte/lib__Utility.cmo";;
+#load "/Users/oliverfong/Documents/uchicago/reg/final_sketch/real_pdfaer/_build/default/.topmod/lib/lib.ml/lib.cmo";;
+open Lib__
+;;
