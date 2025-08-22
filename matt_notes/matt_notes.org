@@ -2,8 +2,18 @@
 ** the build command
 opam exec -- dune build
 ** the command to create a sandboxed switch for the project
-an example PDF input included in the repo (or maybe several example PDF inputs)
-example REPL code showing how to convert the file
+opam switch create . --deps-only --repos dldc=https://dldc.lib.uchicago.edu/opam,default --yes
+** an example PDF input included in the repo (or maybe several example PDF inputs)
++ see directory:
+  pdfa_sketch/testing/infiles/*.pdf
+** to run the testing script (Python):
+*** side note: there is a testing script in Python, because veraPDF outputs ugly XML
+(this is in the latex doc)
+#+begin_example
+  $ cd testing
+  $ python -m tests
+#+end_example
+** example REPL code showing how to convert the file
 example invocation of verapdf (and/or your script) in the unix shell command to validate the output
 example REPL code for as many of the functions in the source as we can reasonably provide
 example REPL code demonstrating how to invoke the relevant functions from camlpdf
