@@ -20,7 +20,6 @@ bug-reports: "https://your.documentation.here"
 depends: [
   "ocaml" {>= "4.14.0"}
   "dune" {>= "3.13"}
-  "camlp-streams"
   "utop"
   "camlpdf"
   "ezxmlm"

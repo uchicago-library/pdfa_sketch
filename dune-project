@@ -21,7 +21,6 @@ reinsert the modified object altogether. Do this for all pertinent problems, and
  (depends
   (ocaml (>= 4.14.0))
    dune
-   camlp-streams
    utop
    camlpdf
    ezxmlm
