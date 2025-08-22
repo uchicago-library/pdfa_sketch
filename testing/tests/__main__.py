@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime
 
 try:
-    from .exec_tools import exec_pdfaer, verify_pdf
+    from .exec_tools import exec_pdfaer, verify_pdf, run_exec
     from .filescript import get_icc_path, get_exec_path
 except ImportError as e:
     print("[error], __main__.py: import failed. ", e, file=sys.stderr)
@@ -24,8 +24,10 @@ def convert (exe_path:Path) -> list[Path]:
     outs : list[Path] = []
     for f in sorted(IPATH.glob('*.pdf')):
         out = OPATH / f'{f.stem}_pdfa.pdf'
+        cpdf_decompress_cmd = ['cpdf', '-decompress', str(f)]
         pdfa_cmd = [exe_path, str(f), '-o', str(out)]
         try:
+            run_exec(cpdf_decompress_cmd)
             done = Path(exec_pdfaer(pdfa_cmd))
             outs.append(done)
             print(f'[converted]: {f.name}')
@@ -46,6 +48,7 @@ def verify (opath:Path, pdfa_flavor:str) -> str:
         res_stanzas.append('\n'.join([head, res, '']))
         print(f'[verified]: {pdfa.name}')
     return '\n'.join(res_stanzas)
+
 
 def main ():
     ensure_dirs(OPATH, LPATH, IPATH)
