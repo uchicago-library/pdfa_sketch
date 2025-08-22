@@ -4,7 +4,8 @@
 
 (toplevel
   (name repl)
-  (libraries camlpdf ezxmlm xmlm))
+  (libraries camlpdf ezxmlm xmlm lib))
+
 (env
  (dev
   (flags (:standard -warn-error -A))))
