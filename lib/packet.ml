@@ -191,7 +191,7 @@ let xmp_insertion (pdf:Pdf.t) (nodes:nodes) : int =
   let ldict = add_dict_entry xmp_dict "/Length" (Integer len) in
   addobj pdf (Stream (ref (ldict, Got bytes)))
 
-let add_pdfaid (pdf:Pdf.t) =
+let modify_pdfaid (pdf:Pdf.t) =
   match xmp_of_pdf pdf with
   | None -> make_xmp_packet () |> insert_pdfaid_tag 
   | Some n -> 
@@ -200,7 +200,7 @@ let add_pdfaid (pdf:Pdf.t) =
     | Some (p, c) when p = "1" && c = "B" -> n
     | _ -> remove_pdfaid_desc n |> insert_pdfaid_tag
 
-let add_creator pdf nodes : nodes = 
+let modify_creator pdf nodes : nodes = 
   match get_info pdf "/Creator" with
   | Some s -> 
      (match search_replace_tag "CreatorTool" s nodes with
@@ -208,11 +208,80 @@ let add_creator pdf nodes : nodes =
       | None -> insert_xmp_tags pdf nodes)
   | _ -> nodes
 
-let add_producer pdf nodes : nodes =
+let modify_producer pdf nodes : nodes =
   match get_info pdf "/Producer" with
   | Some s ->
       (match search_replace_tag "Producer" s nodes with
       | Some n -> n
       | None -> insert_producer_tag pdf nodes)
   | _ -> nodes
+
+
+(* let insert_xmp_tags (pdf:Pdf.t) nodes = *)
+(*   let desc_tag =  *)
+(*     [((ns_rdf, "about"), ""); *)
+(*      ((ns_xmlns, "xmp"), ns_xmp)] *)
+(*   in *)
+(*   let creator_tool =  *)
+(*     match get_info pdf "/Creator" with *)
+(*     | Some s -> `El (((ns_xmp, "CreatorTool"), []), [`Data s]) *)
+(*     | _ -> `El (((ns_xmp, "CreatorTool"), []), []) *)
+(*   in *)
+(*   insert_desc desc_tag [creator_tool] nodes *)
+(**)
+(* <rdf:Description rdf:about="" xmlns:dc='http://purl.org/dc/elements/1.1/' dc:format='application/pdf'> *)
+(*   <dc:title> *)
+(*     <rdf:Alt> <rdf:li xml:lang='x-default'> </rdf:li> </rdf:Alt> *)
+(*   </dc:title> *)
+(*   <dc:creator> *)
+(*     <rdf:Seq> <rdf:li> </rdf:li> </rdf:Seq> *)
+(*   </dc:creator> *)
+(*   <dc:description> *)
+(*     <rdf:Alt> <rdf:li xml:lang='x-default'> </rdf:li> </rdf:Alt> *)
+(*   </dc:description> *)
+(* </rdf:Description> *)
+
+let insert_darwin_tags (pdf:Pdf.t) nodes = 
+  let f = function | Some v -> v | None -> [] in
+  let desc_tag = 
+    [((ns_rdf, "about"), "");
+     ((ns_xmlns, "dc"), ns_dc);
+     ((ns_dc, "format"), "application/pdf")]
+  in
+  let rdf_alt child = [`El (((ns_rdf, "Alt"), []), (f child))] in
+  let rdf_seq child = [`El (((ns_rdf, "Seq"), []), (f child))] in
+  let rdf_li attr data = 
+    match data with
+    | Some d -> Some [`El (((ns_rdf, "li"), (f attr)), [`Data d])]
+    | None -> Some [`El (((ns_rdf, "li"), (f attr)), [])]
+  in
+  let title = 
+    `El (((ns_dc, "title"), []), 
+      (rdf_alt (rdf_li (Some [((ns_xmlns, "lang"), "x-default")]) (get_info pdf "/Title"))))
+  in
+  let creator = 
+    let ct = (rdf_seq (rdf_li None (get_info pdf "/Author"))) in
+    `El (((ns_dc, "creator"), []), ct)
+  in
+  let description = 
+    let dt = (rdf_alt (rdf_li (Some [((ns_xmlns, "lang"), "x-default")]) (get_info pdf "/Subject"))) in
+    `El (((ns_dc, "description"), []), dt)
+  in
+  insert_desc desc_tag [title; creator; description] nodes
+
+let modify_darwin pdf nodes : nodes =
+  let f s = Option.is_some (get_info pdf s) in
+  if f "/Author" || f "/Title" || f "/Subject" 
+  then insert_darwin_tags pdf nodes
+  else nodes
+
+  
+
+
+
+  
+    
+
+
+
 

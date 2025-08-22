@@ -4,9 +4,10 @@
 (* refer to it from the catalog object. *)
 let edit_xmp (pdf:Pdf.t) : unit =
   let packet =
-    Packet.add_pdfaid pdf |> 
-    Packet.add_creator pdf |> 
-    Packet.add_producer pdf 
+    Packet.modify_pdfaid pdf |> 
+    Packet.modify_creator pdf |> 
+    Packet.modify_producer pdf |> 
+    Packet.modify_darwin pdf 
   in
   let catalog = 
     Pdf.add_dict_entry 
