@@ -33,23 +33,5 @@ def reg_rules(text):
     descs = re.findall(pattern_desc, text)
     errmsgs = re.findall(pattern_errmsg, text)
     ctxs = re.findall(pattern_ctx, text)
-    return [specs, descs, errmsgs, ctxs]
+    return (specs, descs, errmsgs, ctxs)
 
-def main():
-    filepath = sys.argv[1]
-    profile = sys.argv[2]
-    cmd = f'verapdf -f {profile} {filepath}'
-    proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-    output = proc.stdout.read().decode('utf-8')
-    print(f'Filename: {reg_name(output)}')
-    failed_rules = int(reg_failed_rules(output))
-    print(f'Failed Rules: {failed_rules}\n')
-    matches = reg_rules(output)
-    for a in range(failed_rules):
-        # print(f'Spec: {matches[0][a]}')
-        print(f'Desc: {matches[1][a]}')
-        # print(f'Ctx: {matches[3][a]}')
-        print(f'ErrMsg: {matches[2][a]}\n')
-
-if __name__ == "__main__":
-    main()

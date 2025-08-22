@@ -5,13 +5,16 @@
 \setstretch{1.15}
 \usepackage{hyperref}
 
-\title{pdfa-converter}
+\title{'pdfaer'}
 \author{Oliver Fong}
-\date{August 20, 2025}
+\date{\today}
 
 \begin{document}
 \maketitle
 
+\tableofcontents
+
+\addcontentsline{toc}{section}{Introduction}
 \section*{Introduction}
 This simple project is meant to provide a library and executable which converts PDFs
 into PDF/A-compliant files for the University of Chicago's DLDC attachment converter project.
@@ -25,6 +28,7 @@ depending objects. In the former case, then parse the existing object, look for 
 reinsert the modified object altogether. Do this for all pertinent problems, and return the edited file.")
  (synopsis "Simple API and executable for converting pdf files into pdfa-compliant files.
 
+\addcontentsline{toc}{section}{Architecture}
 \section*{Architecture}
 The project is organized using several modules:
 \begin{itemize}
@@ -35,29 +39,89 @@ The project is organized using several modules:
   \item \textbf{utility.ml}: Contains helper functions and reusable routines that support the main modules.
 \end{itemize}
 
+\addcontentsline{toc}{section}{Implementation Approach}
 \section*{Implementation Approach}
 The design follows separation of concerns, with each module serving a clear role. 
 I think the best way to go about organizing this project further is by keeping each specification of PDF/A separate,
 such that excryption and decryption is its own module and so on and so forth. 
 
-\section*{Build and Usage}
+\addcontentsline{toc}{section}{Building}
+\section*{Building}
 The project uses Dune for compilation:
 \begin{verbatim}
-dune build
+; Include this stanza in lib/dune for 
+; custom repl that works with camlpdf
+(toplevel
+ (name repl)
+ (libraries camlpdf ezxmlm xmlm))
 \end{verbatim}
+To build the project 
 \begin{verbatim}
-opam exec -- dune ocaml top-module lib/example_module.ml > ./.ocamlinit && utop
+$ opam exec -- dune build
 \end{verbatim}
-There are some problems using camlpdf with dune, so this latter command is
-useful for using utop with dune.
+To use with custom REPL
+\begin{verbatim}
+$ opam exec -- dune build lib/repl.exe
+\end{verbatim}
+To use utop as the REPL instead.
+\begin{verbatim}
+$ opam exec -- dune ocaml top > .ocamlinit
+$ utop
+\end{verbatim}
 
+\addcontentsline{toc}{section}{Testing}
+\section*{Testing}
+To use the python testing suite:
+\begin{verbatim}
+project_root/testing $ python{3} -m tests
+; OR
+project_root/testing $ python3 tests/__main__.py
+\end{verbatim}
+
+I've organized the python tests into these modules:
+\begin{itemize}
+  \item \textbf{exec\_tools.py}: Contains functions to run \textbf{verapdf} and \textbf{pdfaer.exe}, and looks for the latter in the \_build/app/ directory. As of now, the .icc file isn't being supplied to the executable as an option.
+  \item \textbf{filter\_verapdf.py}: This one supplies some simple regex functionality to filter through verapdf's XML output. Is the new library file which used to be process\_verapdf.py. 
+  \item \textbf{filescript.py}: Contains helper functions for trying different common filepaths for the expected executable file and .icc file.
+  \item \textbf{\_\_main\_\_.py}: The actual runfile - first converts all the pdfs in the infiles directory into pdfa files in the outfiles directory, then runs verapdf on them all compiling them in a date-timestamped logfile in logs/
+\end{itemize}
+
+\addcontentsline{toc}{section}{Discussion}
 \section*{Discussion}
-\textbf{Strengths:} modular structure, type safety, reproducible builds.\\
-\textbf{Limitations:} domain-specific scope, limited user-facing documentation.\\
-\textbf{Future Work:} extend font coverage, CLI for testing, handling decryption
+\textbf{Strengths:} clean modular structure, type safety, reproducible builds, semi-automated testing suite, features mulitple layers of abstraction/  
 
-\section*{Conclusion}
-This project highlights how OCaml and Dune can be combined to create a modular, type-safe system for managing fonts, packets, and output intent metadata. It provides a foundation for further development into a more general-purpose document and toolkit.
+\textbf{Limitations:} domain-specific scope, esoteric user-facing documentation, especially as it pertains to camlpdf.  
+
+\textbf{Future Work:} The most important features to add now are as such
+\begin{itemize}
+  \item Finish implementing font embedding functionality. In this includes embedding standard Base14 fonts, CID fonts, proprietary fonts, etc. I believe this will be the toughest feature to implement because of the wide array of font types. 
+  \item Decrypting encrypted PDFs. All PDF/A-compliant PDFS must be decrypted.
+  \item Dealing with compressed PDFs. This will likely involve just decompressing the PDF to modify it then recompressing it with a compliant codec. However, I'm not sure if recompressing will be necessary, as keeping the PDF would more or less fit better into PDF/A's ideological framework.
+  \item Extending the testing suite to make it fully automatic, so that it is incorporated into dune's sandbox. Also, changing the logging method could be good for log legibility. 
+\end{itemize}
+  
+
+This project highlights how OCaml and Dune can be combined to create a modular, type-safe system for managing fonts, XML (XMP Metadata), and output intent metadata. It provides a foundation for further development into a more general-purpose data-conversion toolkit.
+
+\addcontentsline{toc}{section}{Example Code}
+\section*{Example Code}
+\subsection*{REPL}
+\begin{verbatim}
+(* Module: Utility *)
+fname_remove_extension (s:string) : string
+# fname_remove_extension "../document.pdf" : 
+"document"
+
+rev_dict_entries (dict:pdfobject) : pdfobject
+# rev_dict_entries Dictionary [("a", Name "b"); ("c", String "d")]
+Dictionary [("c", String "d"); ("a", Name "b")]
+# rev_dict_entries (Indirect 5)
+Dictionary []
+
+(* Module: *)
+
+
+\end{verbatim}
 
 \end{document}
 

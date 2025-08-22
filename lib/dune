@@ -2,6 +2,9 @@
  (name lib)
  (libraries camlpdf ezxmlm xmlm))
 
+(toplevel
+  (name repl)
+  (libraries camlpdf ezxmlm xmlm))
 (env
  (dev
   (flags (:standard -warn-error -A))))

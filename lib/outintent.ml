@@ -10,17 +10,15 @@ let make_oi s condition_id output_profile_num =
     "/DestOutputProfile", Indirect output_profile_num
   ]
 
-(* bytes_of_file: helper function which returns the bytes of a file *)
-let bytes_of_file fname =
-  let channel = open_in_bin fname in
-  let bytes = Pdfio.bytes_of_input_channel channel in
-  close_in channel; 
-  bytes
-
 (* dictstream_of_file: Creates a valid dictionary stream from an *)
 (* existing Dictionary object and a .icc file. *)
 let dictstream_of_file fname dict = 
-  let bytes = bytes_of_file fname in
+  let bytes = 
+    let c =  open_in_bin fname in 
+    let b = Pdfio.bytes_of_input_channel c in
+    close_in c;
+    b
+  in
   let len = Pdfio.bytes_size bytes in
   let ldict = add_dict_entry dict "/Length" (Integer len) in
   Stream (ref (ldict, Got bytes))
