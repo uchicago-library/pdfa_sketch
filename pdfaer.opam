@@ -23,6 +23,7 @@ depends: [
   "utop"
   "camlpdf"
   "ezxmlm"
+  "prelude"
   "xmlm"
   "odoc" {with-doc}
 ]

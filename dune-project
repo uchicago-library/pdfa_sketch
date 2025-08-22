@@ -24,6 +24,7 @@ reinsert the modified object altogether. Do this for all pertinent problems, and
    utop
    camlpdf
    ezxmlm
+   prelude
    xmlm)
  (source (github your-username/your-repo)))
 
