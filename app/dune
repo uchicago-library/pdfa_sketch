@@ -2,7 +2,7 @@
  (public_name pdfaer) 
  (name pdfaer)
  (promote (until-clean))
- (libraries camlp-streams prelude etude lib)) 
+ (libraries lib)) 
 
 (env
  (dev
