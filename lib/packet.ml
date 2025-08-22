@@ -106,12 +106,12 @@ let get_info (pdf:Pdf.t) (key:string) =
     | _ -> None 
   in
   match v_opt with
-  | _ -> None 
   | Some (_, obj) ->
-      match obj with
+      (match obj with
       | String s -> Some s
       | Name n -> Some n
-      | _ -> None
+      | _ -> None)
+  | _ -> None 
 
 (* Search and replace, returning option nodes *)
 let search_replace_tag t data (nodes:nodes) =
