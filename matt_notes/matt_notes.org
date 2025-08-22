@@ -1,0 +1,16 @@
+* notes from slack
+** the build command
+opam exec -- dune build
+** the command to create a sandboxed switch for the project
+an example PDF input included in the repo (or maybe several example PDF inputs)
+example REPL code showing how to convert the file
+example invocation of verapdf (and/or your script) in the unix shell command to validate the output
+example REPL code for as many of the functions in the source as we can reasonably provide
+example REPL code demonstrating how to invoke the relevant functions from camlpdf
+overview explanation of camlpdf's imperative style involving in-place mutation of global objects, etc. (since this is stylistically non-standard for OCaml)
+a list of other potential camlpdf gotchas
+an overview of basic PDF jargon (like "output intent")
+a description of where the app is currently at in terms of
+conversions it successfully performs
+conversions it currently is unable to perform
+our current best guess as to an exhaustive list of the requirements for a well-formed PDF/A-1b
