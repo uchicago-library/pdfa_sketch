@@ -4,3 +4,10 @@ _build
 **/__pycache__/**
 testing/outfiles/**
 .DS_Store
+_opam
+**/*.fls
+write-up/*.log
+**/*.out
+**/*.toc
+**/*latexmk
+**/*.synctex.*
