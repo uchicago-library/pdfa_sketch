@@ -1,11 +1,17 @@
 * notes from slack
 ** the build command
-opam exec -- dune build
+#+begin_example
+  $ opam exec -- dune build
+#+end_example
 ** the command to create a sandboxed switch for the project
-opam switch create . --deps-only --repos dldc=https://dldc.lib.uchicago.edu/opam,default --yes
+#+begin_example
+  opam switch create . --deps-only --repos dldc=https://dldc.lib.uchicago.edu/opam,default --yes
+#+end_example
 ** an example PDF input included in the repo (or maybe several example PDF inputs)
 + see directory:
-  pdfa_sketch/testing/infiles/*.pdf
+  #+begin_example
+    pdfa_sketch/testing/infiles/*.pdf
+  #+end_example
 ** to run the testing script (Python):
 *** side note: there is a testing script in Python, because veraPDF outputs ugly XML
 (this is in the latex doc)
@@ -14,13 +20,88 @@ opam switch create . --deps-only --repos dldc=https://dldc.lib.uchicago.edu/opam
   $ python -m tests
 #+end_example
 ** example REPL code showing how to convert the file
-example invocation of verapdf (and/or your script) in the unix shell command to validate the output
-example REPL code for as many of the functions in the source as we can reasonably provide
-example REPL code demonstrating how to invoke the relevant functions from camlpdf
-overview explanation of camlpdf's imperative style involving in-place mutation of global objects, etc. (since this is stylistically non-standard for OCaml)
-a list of other potential camlpdf gotchas
-an overview of basic PDF jargon (like "output intent")
-a description of where the app is currently at in terms of
-conversions it successfully performs
-conversions it currently is unable to perform
-our current best guess as to an exhaustive list of the requirements for a well-formed PDF/A-1b
+#+begin_example
+  # let p = Pdfread.pdf_of_file None None "testing/infiles/camlpdf.pdf";;
+  # Lib.edit_xmp p;; (* checks whether there is an xmp, and puts one in if there isn't or if the current xmp sucks; note that mutated p in place *)
+  - : unit = ()
+  # Lib.edit_output_intent p "resources/AdobeRGB1998.icc";; (* same as edit_xmp, except fixes the output intent in place *)
+  # Pdfwrite.pdf_to_file p "camlpdf-pdfa.pdf";; (* save the file *)
+  - : unit = ()
+#+end_example
+** overview of camlpdf's types
+*** most important type: =Pdf.pdfobject=
++ definition:
+  #+begin_src ocaml
+    type pdfobject =
+        Null
+      | Boolean of bool
+      | Integer of int
+      | Real of float
+      | String of string
+      | Name of string
+      | Array of Pdf.pdfobject list
+      | Dictionary of (string * Pdf.pdfobject) list
+      | Stream of (Pdf.pdfobject * Pdf.stream) ref
+      | Indirect of int
+  #+end_src
++ pdf objects contain other pdf objects
++ when you poke through the pdf, the things that say "0202 object" etc
+  will typically either be a =Dictionary= or a =Stream=, for the most
+  part
+** example invocation of verapdf (and/or your script) in the unix shell command to validate the output
+#+begin_example
+  $ verapdf -flavor 1b camlpdf.pdf
+#+end_example
+** example REPL code for as many of the functions in the source as we can reasonably provide
+** example REPL code demonstrating how to invoke the relevant functions from camlpdf
+** overview explanation of camlpdf's imperative style involving in-place mutation of global objects, etc. (since this is stylistically non-standard for OCaml)
+*** so basically, the functions that return unit are mutating the =Pdf.t= parsetree in place
+** a list of other potential camlpdf gotchas
+*** compression
++ we have been using =cpdf='s compression functionality
++ "compression" in this context means packing the content of a stream
+  inside a PDF into a nice, tighly packed binary and not
+  human-readable format
++ this also introduces problems for diffing
++ PDFs that are not fully plaintext will often indicate this to the
+  PDF viewer by throwing some non-ASCII bytes into the header
++ for the code to work, the input PDF (currently) needs to be
+  decompressed
+  + currently, if you run the test suite, verapdf will throw a bunch
+    of validation errors due to expecting all streams in the PDF to be
+    decompressed
+  + this is because pdfaer needs to be able to look at the compressed
+    data to do everything
++ but Oliver is going to try to get the decompression to happen using
+  =camlpdf= functions
++ we are probably going to leave the output decompressed, because
+  decompressed is more human-readable and therefore more
+  archive-tastic
++ Oliver had the idea that maybe we could embed the compression codec
+  in the PDF and compress it, maybe, for the best of all worlds
+*** encrypted PDFs
+**** the PDF needs to be decrypted to be PDF/A compilant
+**** kinds of encryption
+***** 48-bit 
+***** 128-bit
+***** AES (but for that you'd need a key, so we'll just throw an error)
+**** we have not yet worked with an encrypted PDF, so this is just FYI
+** an overview of basic PDF jargon (like "output intent")
+*** output intent
++ output intent nails down the color space so that the PDF reader does
+  not have to guess it
++ we use Adobe =.icc= files for this
++ PDF/A-1b-s must have an output intent
++ for more info, see section 14.11.5 of the ISO 32000 spec
++ you have to download all the =.icc= files from Adobe's website (this
+  1998 one is the default, but there are others)
++ there might be an error case where the PDF says to use the wrong
+  Adobe =.icc= file (we can look into that)
+** a description of where the app is currently at in terms of
+*** conversions it successfully performs
+**** verapdf checks for a total of 200 rules
+**** we're currently covering the basics
+**** we wanna keep on the lookout for corner cases and stuff from the official spec once we get that from ISO
+**** would be nice to get more into the weeds on exactly how 1a differs from 1b
+*** conversions it currently is unable to perform
+** our current best guess as to an exhaustive list of the requirements for a well-formed PDF/A-1b
