@@ -1,10 +1,10 @@
 (library
  (name lib)
- (libraries camlpdf ezxmlm xmlm))
+ (libraries camlpdf ezxmlm xmlm prelude))
 
 (toplevel
   (name repl)
-  (libraries camlpdf ezxmlm xmlm lib))
+  (libraries camlpdf ezxmlm xmlm lib prelude))
 
 (env
  (dev
