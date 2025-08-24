@@ -8,6 +8,7 @@ let ns_rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 let ns_xmp = "http://ns.adobe.com/xap/1.0/"
 let ns_pdf = "http://ns.adobe.com/pdf/1.3/"
 let ns_dc = "http://purl.org/dc/elements/1.1/"
+let ns_xml = "http://www.w3.org/XML/1998/namespace"
 
 let xmp_of_pdf (pdf:Pdf.t) : nodes option =
   match indirect_number pdf "/Metadata" 
@@ -257,14 +258,14 @@ let insert_darwin_tags (pdf:Pdf.t) nodes =
   in
   let title = 
     `El (((ns_dc, "title"), []), 
-      (rdf_alt (rdf_li (Some [((ns_xmlns, "lang"), "x-default")]) (get_info pdf "/Title"))))
+      (rdf_alt (rdf_li (Some [((ns_xml, "lang"), "x-default")]) (get_info pdf "/Title"))))
   in
   let creator = 
     let ct = (rdf_seq (rdf_li None (get_info pdf "/Author"))) in
     `El (((ns_dc, "creator"), []), ct)
   in
   let description = 
-    let dt = (rdf_alt (rdf_li (Some [((ns_xmlns, "lang"), "x-default")]) (get_info pdf "/Subject"))) in
+    let dt = (rdf_alt (rdf_li (Some [((ns_xml, "lang"), "x-default")]) (get_info pdf "/Subject"))) in
     `El (((ns_dc, "description"), []), dt)
   in
   insert_desc desc_tag [title; creator; description] nodes
@@ -275,7 +276,37 @@ let modify_darwin pdf nodes : nodes =
   then insert_darwin_tags pdf nodes
   else nodes
 
+(* |  ISO 19005-1:2005 *)
+(* |  The value of Keywords entry from the document information dictionary, if present, and its analogous XMP property "pdf:Keywords" shall be equivalent *)
+(* |  The value of Keywords entry from the document Info dictionary and its matching XMP property "pdf:Keywords" are not equivalent (Info /Keywords = "", XMP pdf:Keywords = null) *)
+
+
+let insert_producer_keywords_tag (pdf:Pdf.t) nodes =
+  let desc_tag =
+    [((ns_rdf, "about"), "");
+     ((ns_xmlns, "pdf"), ns_pdf)]
+  in
+  let producer_tag = 
+    match get_info pdf "/Producer" with
+    | Some s -> `El (((ns_pdf, "Producer"), []), [`Data s])
+    | _ -> `El (((ns_pdf, "Producer"), []), [])
+  in
+  let keywords_tag = 
+    match get_info pdf "/Keywords" with
+    | Some s -> `El (((ns_pdf, "Keywords"), []), [`Data s])
+    | _ -> `El (((ns_pdf, "Keywords"), []), [])
+  in
+  insert_desc desc_tag [producer_tag; keywords_tag] nodes
   
+let modify_producer_keywords pdf nodes : nodes =
+  match get_info pdf "/Producer" with
+  | Some s ->
+      (match search_replace_tag "Producer" s nodes with
+      | Some n -> n
+      | None -> insert_producer_tag pdf nodes)
+  | _ -> nodes
+
+
 
 
 
