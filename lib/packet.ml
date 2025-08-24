@@ -276,11 +276,6 @@ let modify_darwin pdf nodes : nodes =
   then insert_darwin_tags pdf nodes
   else nodes
 
-(* |  ISO 19005-1:2005 *)
-(* |  The value of Keywords entry from the document information dictionary, if present, and its analogous XMP property "pdf:Keywords" shall be equivalent *)
-(* |  The value of Keywords entry from the document Info dictionary and its matching XMP property "pdf:Keywords" are not equivalent (Info /Keywords = "", XMP pdf:Keywords = null) *)
-
-
 let insert_producer_keywords_tag (pdf:Pdf.t) nodes =
   let desc_tag =
     [((ns_rdf, "about"), "");
@@ -298,21 +293,3 @@ let insert_producer_keywords_tag (pdf:Pdf.t) nodes =
   in
   insert_desc desc_tag [producer_tag; keywords_tag] nodes
   
-let modify_producer_keywords pdf nodes : nodes =
-  match get_info pdf "/Producer" with
-  | Some s ->
-      (match search_replace_tag "Producer" s nodes with
-      | Some n -> n
-      | None -> insert_producer_tag pdf nodes)
-  | _ -> nodes
-
-
-
-
-
-  
-    
-
-
-
-

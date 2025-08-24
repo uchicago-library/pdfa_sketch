@@ -86,18 +86,20 @@ I've organized the python tests into these modules:
   \item \textbf{\_\_main\_\_.py}: The actual runfile - first converts all the pdfs in the infiles directory into pdfa files in the outfiles directory, then runs verapdf on them all compiling them in a date-timestamped logfile in logs/
 \end{itemize}
 
-\addcontentsline{toc}{section}{Discussion}
+\addcontentsline{toc}{section}{Discussion; Going Forward}
 \section*{Discussion}
 \textbf{Strengths:} clean modular structure, type safety, reproducible builds, semi-automated testing suite, features mulitple layers of abstraction/  
 
 \textbf{Limitations:} domain-specific scope, esoteric user-facing documentation, especially as it pertains to camlpdf.  
 
 \textbf{Future Work:} The most important features to add now are as such
+
+\textbf{Difficulties:} I'm fearful that one major roadblock will be dealing with PDFs in later versions. This is something which will require an attentive eye for the PDF and PDF/A spec, especially for figuring out which version should be converted to which archival compliance code. For example, is it smart to try and conform PDF 2.0 to PDF/A 1-b? Or should it instead be converted to something like PDF/A 3-b? There are various issues that have arisen because of this discrepency in PDF versions, as there are some structural changes new versions introduce the option for that really affect PDF/A conversion. 
 \begin{itemize}
+  \item 
   \item Finish implementing font embedding functionality. In this includes embedding standard Base14 fonts, CID fonts, proprietary fonts, etc. I believe this will be the toughest feature to implement because of the wide array of font types. 
   \item Decrypting encrypted PDFs. All PDF/A-compliant PDFS must be decrypted.
   \item Dealing with compressed PDFs. This will likely involve just decompressing the PDF to modify it then recompressing it with a compliant codec. However, I'm not sure if recompressing will be necessary, as keeping the PDF would more or less fit better into PDF/A's ideological framework.
-  \item Extending the testing suite to make it fully automatic, so that it is incorporated into dune's sandbox. Also, changing the logging method could be good for log legibility. 
 \end{itemize}
   
 
@@ -113,7 +115,7 @@ fname_remove_extension (s:string) : string
 "document"
 
 rev_dict_entries (dict:pdfobject) : pdfobject
-# rev_dict_entries Dictionary [("a", Name "b"); ("c", String "d")]
+# rev_dict_entries (Dictionary [("a", Name "b"); ("c", String "d")])
 Dictionary [("c", String "d"); ("a", Name "b")]
 # rev_dict_entries (Indirect 5)
 Dictionary []
